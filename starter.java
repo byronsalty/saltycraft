@@ -90,6 +90,14 @@ class Starter {
     }
   }
 
+  public static void commandPlayed(String command) {
+    System.out.println("command: " + command);
+
+    // if (saying.equals("lets play")) {
+    //   startGame();
+    // }
+  }
+
   public static void checkForChat(String line) {
     Pattern pattern = Pattern.compile("^<(\\w+)> (.*)$");
     Matcher matcher = pattern.matcher(line);
@@ -102,6 +110,18 @@ class Starter {
     }
   }
 
+  public static void checkForCommand(String line) {
+    Pattern pattern = Pattern.compile("^\\[@\\] (.*)$");
+    Matcher matcher = pattern.matcher(line);
+
+    if (matcher.find()) {
+      System.out.println("matched");
+      commandPlayed(matcher.group(1));
+    } else {
+      System.out.println("no match");
+    }
+  }
+
   public static void checkLine(String rawLine) {
     System.out.println("orig: " + rawLine);
     String[] lineArr = rawLine.split(": ", 2);
@@ -109,6 +129,7 @@ class Starter {
     System.out.println("line: " + line);
 
     checkForChat(line);
+    checkForCommand(line);
   }
   public static void writeToMinecraft(String toWrite) {
     try {
